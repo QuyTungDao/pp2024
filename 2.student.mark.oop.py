@@ -3,23 +3,7 @@ class student:
         self.student_id = student_id
         self.name = name
         self.DoB = DoB
-    
-    def __str__(self):
-        return f"Name: {self.name}, ID: {self.student_id}, DOB: {self.DoB}"
-
-class course:
-    def __init__(self,course_id,name):
-        self.course_id = course_id
-        self.name = name
-
-    def __str__(self):
-        return f"Name: {self.name}, ID: {self.course_id}"
-
-class Manage_system:
-    def __init__(self):
         self.students = []
-        self.courses = []
-        self.marks = {}
 
     def add_student(self,student):
         self.students.append(student)
@@ -30,8 +14,16 @@ class Manage_system:
         else:
             for i,student in enumerate(self.students,1):
                 print(f"{i},{student}")
-        
-    
+
+    def __str__(self):
+        return f"Name: {self.name}, ID: {self.student_id}, DOB: {self.DoB}"
+
+class course:
+    def __init__(self,course_id,name):
+        self.course_id = course_id
+        self.name = name
+        self.courses = []
+
     def add_course(self,course):
         self.courses.append(course)
     
@@ -41,29 +33,36 @@ class Manage_system:
         else:
             for i,course in enumerate(self.courses,1):
                 print(f"{i}: {course}")
+
+    def __str__(self):
+        return f"Name: {self.name}, ID: {self.course_id}"
+
+class Manage_system:
+    def __init__(self):
+        self.marks = {}
     
     def input_mark(self):
-        if not self.students or not self.courses:
+        if not students.students or not courses.courses:
             print("There are no student or course in the list !!")
         else:
-            self.list_student()
+            students.list_student()
             student_choice=int(input("Choose a student to enter mark: "))
-        if 1<= student_choice<= len(self.students):
-            student_selected= self.students[student_choice-1]
+            if 1<= student_choice<= len(students.students):
+                student_selected= students.students[student_choice-1]
 
-            self.list_courses()
-            course_choice = int(input("Choose a course: "))
+                courses.list_courses()
+                course_choice = int(input("Choose a course: "))
         
-            if 1<= course_choice <= len(self.courses):
-                course_selected = self.courses[course_choice-1]
-                mark_value = float(input(f"Enter mark for {student_selected.name} in {course_selected.name}: "))
+                if 1<= course_choice <= len(courses.courses):
+                    course_selected = courses.courses[course_choice-1]
+                    mark_value = float(input(f"Enter mark for {student_selected.name} in {course_selected.name}: "))
 
-                student_course_key= (student_selected.name,course_selected.name)               
-                self.marks[student_course_key]=mark_value
+                    student_course_key= (student_selected.name,course_selected.name)               
+                    self.marks[student_course_key]=mark_value
+                else:
+                    print("Invalid course choice!!!")
             else:
-                print("Invalid course choice!!!")
-        else:
-            print("Invalid student choice!!!")
+                print("Invalid student choice!!!")
 
     def list_mark(self):
         if not self.marks:
@@ -74,6 +73,8 @@ class Manage_system:
 
 
 mark = Manage_system()
+students = student(None,None,None)
+courses = course(None,None)
 
 while True:
     print("""
@@ -97,18 +98,18 @@ while True:
             id = input("Enter student's ID: ")
             DoB = input("Enter student's DoB (dd/mm/yy): ")
             stu = student(id,name,DoB)
-            mark.add_student(stu)
+            students.add_student(stu)
     elif option == 2:
-        mark.list_student()
+        students.list_student()
     elif option == 3:
         num_courses = int(input("Enter number of course: "))
         for i in range(num_courses):
             id = input("Enter course's ID: ")
             name = input("Enter course's name: ")
             cour= course(id,name)
-            mark.add_course(cour)
+            courses.add_course(cour)
     elif option == 4:
-        mark.list_courses()
+        courses.list_courses()
     elif option == 5:
         mark.input_mark()
     elif option == 6:
