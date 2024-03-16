@@ -1,0 +1,1 @@
+mark_system.add_mark(student_course_key, mark_value)
